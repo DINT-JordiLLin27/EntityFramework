@@ -57,6 +57,43 @@
                     <Button x:Name="ModificarButton" Content="Modificar" Width="100" HorizontalAlignment="Left" Click="ModificarButton_Click" Margin="0,15,0,0"></Button>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="DataGrid">
+                <DockPanel x:Name="DataGridDockPanel" Margin="20">
+                    <Button x:Name="ActualizarDataGridButton" DockPanel.Dock="Bottom" Content="Actualizar" Width="100" HorizontalAlignment="Left"  Margin="0,15,0,0" Click="ActualizarDataGridButton_Click"></Button>
+                    <DataGrid x:Name="DatosDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Identificador" Binding="{Binding id}" Width="*"/>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="2*"/>
+                            <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Filtrar">
+                <DockPanel x:Name="FiltrarDockPanel" Margin="10">
+                    <StackPanel x:Name="FiltrarStackPanel" DockPanel.Dock="Top" Orientation="Horizontal" Margin="5">
+                        <Label Content="Nombre: " Margin="5"/>
+                        <TextBox x:Name="FiltroTextBox" Width="150" Height="20"/>
+                        <Button x:Name="FiltrarButton" Content="Filtrar" Width="80" Margin="5" Height="20" Click="FiltrarButton_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="FiltrarDatosDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Identificador" Binding="{Binding id}" Width="*"/>
+                            <DataGridTemplateColumn Header="Nombre completo" Width="2*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Run Text="{Binding nombre}"/>
+                                            <Run Text="{Binding apellido}"/>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Nº Pedidos" Binding="{Binding PEDIDOS.Count}" Width="2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

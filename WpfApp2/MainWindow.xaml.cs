@@ -20,18 +20,24 @@ namespace WpfApp2
     {
         private CLIENTE nuevoCliente;
         private InformesEntities contexto;
+        private CollectionViewSource vista;
         public MainWindow()
         {
             InitializeComponent();
+
             contexto = new InformesEntities();
             nuevoCliente = new CLIENTE();
+            vista = new CollectionViewSource();
 
             contexto.CLIENTES.Load();
+            vista.Source = contexto.CLIENTES.Local;
 
             this.DataContext = contexto.CLIENTES.Local;
 
             //DatosListBox.DataContext = contexto.CLIENTES.Local;
             InsertarStackPanel.DataContext = nuevoCliente;
+            FiltrarDatosDataGrid.DataContext = vista;
+            vista.Filter += Vista_Filter;
             //EliminarDatosComboBox.DataContext = contexto.CLIENTES.Local;
             //ModificarStackPanel.DataContext = contexto.CLIENTES.Local;
         }
@@ -64,7 +70,7 @@ namespace WpfApp2
 
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
-          
+
             MessageBoxResult boxResult = MessageBox.Show("¿Actualizar " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).nombre + " " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).apellido + "?", "Actualizar Dato", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
 
             if (boxResult == MessageBoxResult.OK)
@@ -73,6 +79,38 @@ namespace WpfApp2
                 MessageBox.Show("Actualizado correctamente", "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else MessageBox.Show("No se ha actualizado " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).nombre + " " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).apellido, "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ActualizarDataGridButton_Click(object sender, RoutedEventArgs e)
+        {
+            contexto.SaveChanges();
+        }
+
+
+        private void Vista_Filter(object sender, FilterEventArgs e)
+        {
+            CLIENTE item = (CLIENTE)e.Item;
+            
+            if (FiltroTextBox.Text == "")
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                if (item.nombre.Contains(FiltroTextBox.Text) || item.apellido.Contains(FiltroTextBox.Text))
+                {
+                    e.Accepted = true;
+                }
+                else
+                {
+                    e.Accepted = false;
+                }
+            }
+        }
+
+        private void FiltrarButton_Click(object sender, RoutedEventArgs e)
+        {
+            vista.View.Refresh();
         }
     }
 }
