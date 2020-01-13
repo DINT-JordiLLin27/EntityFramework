@@ -28,10 +28,12 @@ namespace WpfApp2
 
             contexto.CLIENTES.Load();
 
-            DatosListBox.DataContext = contexto.CLIENTES.Local;
+            this.DataContext = contexto.CLIENTES.Local;
+
+            //DatosListBox.DataContext = contexto.CLIENTES.Local;
             InsertarStackPanel.DataContext = nuevoCliente;
-            EliminarDatosComboBox.DataContext = contexto.CLIENTES.Local;
-            ModificarStackPanel.DataContext = contexto.CLIENTES.Local;
+            //EliminarDatosComboBox.DataContext = contexto.CLIENTES.Local;
+            //ModificarStackPanel.DataContext = contexto.CLIENTES.Local;
         }
 
         private void InsertarButton_Click(object sender, RoutedEventArgs e)
@@ -62,18 +64,15 @@ namespace WpfApp2
 
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
-            CLIENTE updateCliente = (CLIENTE)ModificarDatosComboBox.SelectedItem;
-
-            MessageBoxResult boxResult = MessageBox.Show("¿Actualizar " + updateCliente.nombre + " " + updateCliente.apellido + "?", "Actualizar Dato", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+          
+            MessageBoxResult boxResult = MessageBox.Show("¿Actualizar " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).nombre + " " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).apellido + "?", "Actualizar Dato", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
 
             if (boxResult == MessageBoxResult.OK)
             {
-                updateCliente.nombre = NombreModificarTextBox.Text;
-                updateCliente.apellido = ApellidoModificarTextBox.Text;
                 contexto.SaveChanges();
                 MessageBox.Show("Actualizado correctamente", "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else MessageBox.Show("No se ha actualizado " + updateCliente.nombre + " " + updateCliente.apellido, "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
+            else MessageBox.Show("No se ha actualizado " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).nombre + " " + ((CLIENTE)ModificarDatosComboBox.SelectedItem).apellido, "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
