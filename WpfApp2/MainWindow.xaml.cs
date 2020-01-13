@@ -44,8 +44,6 @@ namespace WpfApp2
                 InsertarStackPanel.DataContext = nuevoCliente;
             }
             else MessageBox.Show("El campo 'Identificador' ya existe", "Insertar Dato", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-
         }
 
         private void EliminarButton_Click(object sender, RoutedEventArgs e)
@@ -60,7 +58,6 @@ namespace WpfApp2
                 contexto.SaveChanges();
             }
             else MessageBox.Show("No se ha eliminado " + deleteCliente.nombre + " " + deleteCliente.apellido, "Eliminar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
-
         }
 
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
@@ -77,8 +74,6 @@ namespace WpfApp2
                 MessageBox.Show("Actualizado correctamente", "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else MessageBox.Show("No se ha actualizado " + updateCliente.nombre + " " + updateCliente.apellido, "Actualizar Dato", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
         }
     }
 }
