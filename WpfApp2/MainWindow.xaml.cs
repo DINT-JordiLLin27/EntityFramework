@@ -29,7 +29,7 @@ namespace WpfApp2
             nuevoCliente = new CLIENTE();
             vista = new CollectionViewSource();
 
-            contexto.CLIENTES.Load();
+            contexto.CLIENTES.Include(c => c.PEDIDOS).Load();
             vista.Source = contexto.CLIENTES.Local;
 
             this.DataContext = contexto.CLIENTES.Local;
